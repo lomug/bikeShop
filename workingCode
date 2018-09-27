@@ -1,0 +1,117 @@
+// variable  and constant declarations
+      var bikes = parseInt(prompt("How many bikes would you like?"));
+      var numberOfDays = parseInt(prompt("How many days would you like your bike for?"));
+      var price;
+      const deposit = 10;
+      var discount;
+      var cost;
+      const old = 0.1;
+      const school = 0.05;
+      const member = 0.15;
+      const sevenDay = 0.25;
+      var discountAmnt;
+
+
+      // the user is promoted for a month and the entry is coonverteed to upper case
+      var month = (prompt(" when would you like to borrow")).toUpperCase();
+      // calling the seasonsMonth function to check that the user enetred a valid month
+      seasonsMonth();
+
+      // more variable and constant  declartions
+      var person = (prompt(" are you an OAP, student or Cycling club member? type either oap, student or member")).toUpperCase();
+      totalDiscounts();
+
+
+
+
+      //function to check if the user enters a valid month and the price of borrowing for that month.
+      function seasonsMonth() {
+        if ((month == "MAR") || (month == "APR") || (month == "MAY")) {
+          price = 10;
+        } else if ((month == "JUN") || (month == "JUL") || (month == "AUG")) {
+          price = 25;
+        } else if ((month == "SEP") || (month == "OCT") || (month == "NOV")) {
+          price = 15;
+        } else if ((month == "DEC") || (month == "JAN") || (month == "FEB")) {
+          price = 5;
+          // this occurs when the user does not eneter a valid month.
+          // An alert is displayed to the user
+          // the throw keyword causes the program to terminate
+        } else {
+          throw alert("Please enter either jan, feb, mar, apr, may jun, jul, aug, sep, oct nov or dec.");
+          // the price is returned for further calculations.
+        }
+        return price;
+      } // end of seasnsMonth function
+
+
+
+
+
+      // function to calculate the discount based on the users status and duration of the loan
+      function totalDiscounts() {
+        if ((person == "OAP") || (person == "STUDENT") || (person == "MEMBER")) {
+          switch (person) {
+            case 'OAP':
+              if (numberOfDays >= 7) {
+                discount = old + sevenDay;
+              } // end of if for 1st case
+              else {
+                discount = old;
+              }
+              break;
+            case 'STUDENT':
+              if (numberOfDays >= 7) {
+                discount = school + sevenDay;
+              } else {
+                discount = school;
+              }
+              break;
+            case "MEMBER":
+              if (numberOfDays >= 7) {
+                discount = member + sevenDay;
+              } else {
+                discount = member;
+              }
+              break;
+            default:
+              if (numberOfDays >= 7) {
+                discount = sevenDay;
+              } // end of if that checks if the the number is less than 7
+          } // end of switch
+          //multipled the dicount by 1^-10 to avoid the NAN error when i use boundary numbers i.e when my computation will goive me a negative result
+          return (discount * 1e-10).toFixed(2);
+        } else {
+          throw alert(" Please enter either OAP, student or member");
+        } // end of else
+      } // end of totalDiscounts Function
+
+
+
+
+
+      // this is the function that actually pulls everything together.
+      //the seasons_month function is called and executed
+      //then the total_discounts function
+
+
+      function bikeShop() {
+        //function calls
+        seasonsMonth();
+        totalDiscounts();
+        // the discount calculated the value of the discount
+        discountAmnt = (price * bikes * numberOfDays * discount);
+        //The cost claculates the amount payable after the discount
+        cost = price * bikes * numberOfDays * (1 - discount) - deposit;
+
+        alert(" The total number of bicycles hired is " + bikes + ".\n Your hire is for " + numberOfDays + " days.\n Your total discount is £" + discountAmnt + ".\n The amount payable on return is £" + cost);
+      }
+
+
+
+
+
+
+
+      // callin the bikeShop function
+      bikeShop();
